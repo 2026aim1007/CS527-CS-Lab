@@ -10,10 +10,6 @@ void reset(void) {
         Register[i] = 0;
     }
     PC = 0;
-    opcode = 0;
-    dest = 0;
-    src1 = 0;
-    src2 = 0;
     end_of_simulation = 0;
 }
 
@@ -22,16 +18,15 @@ void fetch(void) {
         end_of_simulation = 1;
         return;
     }
-    // Read 4 bytes sequentially out of byte-addressable instruction memory
     opcode = (unsigned char)Instruction[PC];
     dest   = (unsigned char)Instruction[PC + 1];
     src1   = (unsigned char)Instruction[PC + 2];
     src2   = (unsigned char)Instruction[PC + 3];
-    PC += 4; 
+    PC += 4;
 }
 
 void decode(void) {
-    // Intentionally left empty per professor instructions for Lab 1
+    // Void and empty function at this time
 }
 
 void execute(void) {
@@ -54,7 +49,7 @@ void execute(void) {
             if (Register[src2] != 0) {
                 Register[dest] = Register[src1] / Register[src2];
             } else {
-                Register[dest] = 0; // Guard against crashes
+                Register[dest] = 0;
             }
             break;
         case 5: // Memory Read
