@@ -1,0 +1,6 @@
+Read x1, 0
+Read x2, 4
+Read x3, 8
+x4 = x1 + x2
+x5 = x4 + x3
+Write x5, 12
