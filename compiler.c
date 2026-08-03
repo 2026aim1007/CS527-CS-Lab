@@ -17,11 +17,7 @@ void compile(void) {
 
     while (fgets(line, sizeof(line), in)) {
         line_num++;
-        
-        // FIX: Strip the invisible trailing newline (\n) and carriage return (\r)
         line[strcspn(line, "\r\n")] = '\0';
-
-        // Skip empty lines (since we stripped the newline, empty lines are now just '\0')
         if (line[0] == '\0') continue;
 
         int op = 0, dest = 0, src1 = 0, src2 = 0;
@@ -59,9 +55,7 @@ void compile(void) {
         }
 
         if (op != 0) {
-            // 1. SYNTAX ERROR CONTROL
             if (matches != expected) {
-                // Notice the \n added at the end of the format string now
                 printf("\nCOMPILATION ERROR at Line %d: '%s'\n", line_num, line);
                 printf("Reason: Syntax Error. Variables must start with 'x' (e.g., x0 to x255).\n\n");
                 fclose(in);
@@ -70,7 +64,6 @@ void compile(void) {
                 exit(1);
             }
 
-            // 2. BOUNDS ERROR CONTROL
             if (dest < 0 || dest > 255 || src1 < 0 || src1 > 255 || src2 < 0 || src2 > 255) {
                 printf("\nCOMPILATION ERROR at Line %d: '%s'\n", line_num, line);
                 printf("Reason: Out of Bounds.\n");

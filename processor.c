@@ -26,7 +26,6 @@ void fetch(void) {
 }
 
 void decode(void) {
-    // Void and empty function at this time
 }
 
 void execute(void) {
@@ -36,29 +35,29 @@ void execute(void) {
     }
 
     switch (opcode) {
-        case 1: // Add
+        case 1:
             Register[dest] = Register[src1] + Register[src2];
             break;
-        case 2: // Subtract
+        case 2:
             Register[dest] = Register[src1] - Register[src2];
             break;
-        case 3: // Multiply
+        case 3:
             Register[dest] = Register[src1] * Register[src2];
             break;
-        case 4: // Divide
+        case 4:
             if (Register[src2] != 0) {
                 Register[dest] = Register[src1] / Register[src2];
             } else {
                 Register[dest] = 0;
             }
             break;
-        case 5: // Memory Read
+        case 5:
             Register[dest] = (unsigned char)Data[src1];
             break;
-        case 6: // Memory Write
+        case 6:
             Data[src1] = (char)Register[dest];
             break;
-        case 7: // Data Movement
+        case 7:
             Register[dest] = src1;
             break;
         default:
