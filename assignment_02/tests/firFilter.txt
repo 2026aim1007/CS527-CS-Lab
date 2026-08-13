@@ -1,0 +1,32 @@
+% --- TEST 2: FIR Filter Response ---
+% N at [0], Inputs at [4], Outputs at [16]
+% Formula: y[n] = 3*x[n] + 2*x[n-1]
+
+x1 = 0
+x2 = 4
+x3 = 16
+x4 = [0]
+x5 = 0
+
+.firloop
+x6 = x1 - x4
+BEQ .firexit  % If equal, finish filter
+
+x7 = [x2]
+
+% Apply FIR Weights (Constants in program)
+x8 = x7 * 3
+x9 = x5 * 2
+
+x10 = x8 + x9
+[x3] = x10
+
+x5 = x7
+x1 = x1 + 1
+x2 = x2 + 4
+x3 = x3 + 4
+
+BAL .firloop
+
+.firexit
+x255 = 0
