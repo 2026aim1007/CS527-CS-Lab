@@ -1,0 +1,59 @@
+% --- CODE 2: FIR Filter Response ---
+x1 = 0          % k = 0
+x3 = [0]        % load N (total array size)
+
+x10 = 8
+x11 = x3 - x10  % N - 8
+x11 = x11 + 1   % We want loop to run while k <= N - 8
+
+x6 = 256        % Output pointer base
+
+.firloop
+x12 = x1 - x11
+BEQ .firexit
+
+x4 = 4          % Weight pointer (starts at 4 every loop)
+v1 = [x4]       % loads 8 weights
+
+x7 = x1 * 4
+x5 = 36         % Base Input pointer
+x5 = x5 + x7    % Calculate input[k] pointer
+v2 = [x5]       % loads 8 inputs (k to k+7)
+
+v3 = v1 * v2    % element-wise multiply
+
+x13 = 2000      % Scratchpad address to circumvent lack of vector-horizontal add
+[x13] = v3      % store multiplied vector to scratchpad
+
+% Retrieve elements individually to calculate the horizontal sum
+x14 = 2000
+x20 = [x14]     
+x14 = x14 + 4
+x21 = [x14]     
+x20 = x20 + x21
+x14 = x14 + 4
+x21 = [x14]     
+x20 = x20 + x21
+x14 = x14 + 4
+x21 = [x14]     
+x20 = x20 + x21
+x14 = x14 + 4
+x21 = [x14]     
+x20 = x20 + x21
+x14 = x14 + 4
+x21 = [x14]     
+x20 = x20 + x21
+x14 = x14 + 4
+x21 = [x14]     
+x20 = x20 + x21
+x14 = x14 + 4
+x21 = [x14]     
+x20 = x20 + x21 % Final scalar sum
+
+[x6] = x20      % Store sum to output
+x6 = x6 + 4     % increment output pointer
+
+x1 = x1 + 1     % k++
+BAL .firloop
+
+.firexit

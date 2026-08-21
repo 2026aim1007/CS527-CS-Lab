@@ -1,0 +1,24 @@
+% --- CODE 1: Sum of 2 Arrays of N Numbers ---
+% With Vectors
+x1 = 0          % counter (elements processed)
+x3 = [0]        % load N (total array size)
+
+x4 = 4          % A pointer
+x8 = 4
+x9 = x3 * x8    % 4N memory offset
+x5 = x4 + x9    % B pointer = 4 + 4N
+x6 = x5 + x9    % Output pointer = 4 + 8N
+
+.loop
+x10 = x1 - x3   % compare elements processed vs N
+BEQ .exit       % If equal, exit
+
+v1 = [x4]       % loads 8 elements from A, auto-increments x4 by 32 bytes
+v2 = [x5]       % loads 8 elements from B, auto-increments x5 by 32 bytes
+v3 = v1 + v2
+[x6] = v3       % stores 8 elements to Output, auto-increments x6 by 32 bytes
+
+x1 = x1 + 8     % increment counter by 8 elements
+BAL .loop
+
+.exit
